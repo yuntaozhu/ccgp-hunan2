@@ -1,0 +1,969 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>湖南省怀化市政府采购网</title>
+    <link href="/css/css.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/js/koala.min.1.5.js"></script>
+    <script type="text/javascript">
+        var area_id = "110";
+        var city ="怀化市";
+        $(document).ready(function() {
+            initdate();
+        });
+
+        function initdate() {
+            var myDate = new Date();
+            var dayNames = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
+            $("#date").html("欢迎进入湖南省"+city+"政府采购网！ 今天是" + myDate.getFullYear() + "年" + (myDate.getMonth() + 1) + "月" + myDate.getDate() + "日  " + dayNames[myDate.getDay()]);
+            $("#city_1").html(city);
+            $("#city_2").html(city);
+        }
+
+
+
+        //查看更多栏目
+        function viewMoreCpntent(column_code) {
+            window.open('/page/content/more_city.jsp?column_code='+column_code+'&area_id='+area_id);
+        }
+
+        //查看更多公告数据
+        function viewMore() {
+            window.open('/page/notice/more_city.jsp?area_id='+area_id);
+        }
+
+        function iFrameHeight() {
+            var ifm= document.getElementById("content");
+            setTimeout(function(){
+                var subWeb = document.frames ? document.frames["content"].document : ifm.contentDocument;
+                if(ifm&&subWeb&&subWeb.body) {
+                    var h = subWeb.body.scrollHeight;
+                    if(h < 1000){
+                        h+= 800;
+                    }
+                    ifm.height = h;
+                }
+            }, 100);
+
+        }
+
+
+        function viewNotcieContent(noticeId) {
+            window.open('/page/notice/notice_city.jsp?noticeId='+noticeId+'&area_id='+area_id);
+        }
+
+        function showlogin()
+        {
+            var url =  "https://220.168.30.70:90/w_login.jsp";
+            window.open(url);
+            //var userId = window.showModalDialog(url,"","dialogWidth=1200px;dialogHeight=600px;");
+            //var userId = "xxb";
+
+        }
+        function loginOut()
+        {
+            var url = '/mvc/loginOut.do';
+            $.post(url, {
+            }, function(data) {
+                if(data.msg=="ok")
+                {
+                    alert('已注销成功.');
+                    window.location.reload();
+                }
+
+            }, "json");
+
+        }
+
+        //关闭
+        function closeWindow(){
+            window.close();
+        }
+
+        function printPage(){
+            window.frames["content"].focus();
+            window.frames["content"].print();
+
+        }
+
+        function srh(){
+            var srh_content = $("#srh_content").val();
+            if(srh_content=="请输入关键字..."){
+                srh_content="";
+            }
+            var srh_type = $('#dbselect option:selected') .val();
+            var url = "";
+            if(srh_type=='zx'){
+                url = "/page/content/more_srh.jsp?title="+cjkEncode(srh_content);
+            }else{
+                url = "/page/notice/more4.jsp?noticeTypeID=&search_notice="+cjkEncode(srh_content);
+
+            }
+            openurl(url);
+        }
+
+        function openurl(url){
+            window.open(url);
+        }
+
+        /**
+         * 对中文进行加密，以避免乱码
+         * @param textUrl
+         * @return
+         */
+        function cjkEncode(textUrl){
+            if(textUrl == null || textUrl=="undefined"){
+                return "";
+            }
+            var newText = "";
+            for(var i=0;i<textUrl.length;i++) {
+                var code = textUrl.charCodeAt(i);
+                if(code >= 128 || code == 91 || code == 93){
+                    newText +="[" + code.toString(16) + "]";
+                }else{
+                    newText +=textUrl.charAt(i);
+                }
+            }
+            return newText;
+        }
+    </script>
+</head>
+
+<body>
+<div class="top">
+    <div class="top_one">
+        <ul class="web_link">
+            <p id="date"></p>
+            <!-- <span><a href="http://220.168.30.70:8080" target="_blank"><font style="color: #FFA500;"><b>旧网站入口</b></font></a></span> -->
+        </ul>
+    </div>
+    <div class="top_two"><img src="../../images/top_two_bg_03.jpg" height="161" width="1463"/></div>
+    <div class="nav">
+        <div class="nav_left">
+            <a href="/portal_city.jsp?area_id=110">怀化首页</a>&nbsp;|&nbsp;
+            <a href="#" onclick="viewMoreCpntent('2');">工作动态</a>&nbsp;|&nbsp;
+            <a href="#" onclick="viewMoreCpntent('3');">政策法规</a>&nbsp;|&nbsp;
+            <a href="/page/purchaseService/purchaseService.jsp?areaCode=hhs" target="_blank">购买服务</a>&nbsp;|&nbsp;
+            <a href="#" onclick="viewMore();">信息公开</a>&nbsp;|&nbsp;
+            <a href="#" onclick="viewMoreCpntent('4');">办事指南</a>&nbsp;|&nbsp;
+            <a href="#" onclick="viewMoreCpntent('6');">监督管理</a>&nbsp;|&nbsp;
+            <a href="https://hunan.zcygov.cn/"   target="_blank">电子卖场</a>&nbsp;|&nbsp;
+            <a href="#" onclick="openurl('https://220.168.30.70:90/page/portal/financeBankInfo_portal.jsp');" >合同融资</a>
+            <!-- 	<a href="#">采购协会</a>&nbsp;|&nbsp;-->
+        </div>
+        <div class="search">
+            <select name="dbselect" id="dbselect" style="float:left;width:72px!important;height:27px!important;">
+                <option value="zx">站内资讯</option>
+                <option value="gg" selected="true">采购公告</option>
+            </select>
+            <input id="srh_content" type="text" style="width:128px!important;height:27px!important;background:none!important;border:none!important;text-indent:9px; font-size:12px; color:#9fa5ab;float:left;"  value="请输入关键字..." />
+            <!-- <input class="search_kuang" name="" type="text" value="请输入关键字..." /> -->
+            <!-- <input class="allsearch" name="" type="button" value="" /> -->
+            <input id="" style="width:50px!important; height:27px!important; background:url(/images/search_butbg_05.jpg) no-repeat center; border:none!important;margin-left:1px; display:inline; color:#fff; font-size:14px; font-weight:bold; cursor:pointer;" name="" type="button" value="" onclick="srh();"/>
+        </div>
+    </div>
+</div>
+<div class="center" style="overflow: hidden;">
+    <div class="l_position">您现在的位置是：<a href="/portal_city.jsp?area_id=110">首页</a>><a href="#" class="dq">公告 </a></div>
+    <div style="width:100%;height:100%;border: 0;">
+        <p align='center' style='font-weight: bold;'>芷江侗族自治县梨溪口乡梨溪口村公路建设工程谈判成交公告</p>
+        <p align='center'>公告日期:2021年06月16日</p>
+        <div>
+            <p class="MsoNormal" style="text-align: left; line-height: 25pt; text-indent: 24pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 31.6pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <u>
+                        <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                            <font face="宋体">芷江侗族自治县库区移民事务中心</font>
+                        </span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">的</font>
+                    </span>
+                <u>
+                        <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                            <font face="宋体">芷江侗族自治县梨溪口乡梨溪口村公路建设工程</font>
+                        </span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">，政府采购编号：</font>
+                    </span>
+                <u>
+                        <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                            <font face="宋体">芷财采计（</font>
+                            2021）000145
+                        </span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">，委托代理编号：</font>
+                    </span>
+                <u>
+                    <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>&nbsp;HNMCHHCG-2021013</span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">项目于</font>
+                    </span>
+                <u>
+                    <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>&nbsp;2021年6月16日 </span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">结束，现将成交结果公告如下：</font>
+                    </span>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p align="justify" class="MsoNormal" style="text-align: justify; line-height: 18pt; text-indent: -149.6pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 181.1pt; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <b>
+                        <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                            <font face="宋体">一、</font>
+                        </span>
+                </b>
+                <b>
+                    <span style='font-family: "Times New Roman"; font-size: 7pt; font-weight: bold; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>&nbsp;&nbsp;</span>
+                </b>
+                <b>
+                        <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                            <font face="宋体">采购项目名称</font>
+                        </span>
+                </b>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">：</font>
+                    </span>
+                <u>
+                        <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                            <font face="宋体">芷江侗族自治县梨溪口乡梨溪口村公路建设工程</font>
+                        </span>
+                </u>
+                <span style='font-family: 宋体; font-size: 10.5pt; mso-spacerun: "yes"; mso-ascii-font-family: "Times New Roman"; mso-hansi-font-family: "Times New Roman";'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p align="justify" class="MsoNormal" style="text-align: justify; line-height: 18pt; text-indent: 60.25pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 60.25pt; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <b>
+                        <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                            <font face="宋体">预算金额</font>
+                        </span>
+                </b>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">：</font>
+                    </span>
+                <u>
+                    <span style='font-family: 宋体; font-size: 12pt; font-weight: normal; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>1237234.00元</span>
+                </u>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>&nbsp;</span>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 15.8pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.7pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <b>
+                        <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                            <font face="宋体">二、编号</font>
+                        </span>
+                </b>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <font face="宋体">：</font>
+                    </span>
+                <span style='font-family: Calibri; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.6pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1、政府采购计划编号：</span>
+                <u>
+                        <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                            <font face="宋体">芷财采计（</font>
+                            2021）000145
+                        </span>
+                </u>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.6pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>2、采购代理编号 ：</span>
+                <u>
+                    <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>&nbsp;HNMCHHCG-2021013 </span>
+                </u>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21.1pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.7pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <b>
+                        <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                            <font face="宋体">三、邀请供应商的情况</font>
+                        </span>
+                </b>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.6pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1、供应商产生方式：（）公告邀请（ ）供应商库抽取（√）采购人、专家推荐</span>
+                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 7.6pt; margin-bottom: 0pt; margin-left: 28.6pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>2、采取采购人、评审专家推荐方式的推荐意见 </span>
+                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                        <o:p></o:p>
+                    </span>
+            </p>
+            <p align="justify" class="MsoNormal" style="text-align: justify; text-indent: -20pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 130pt; page-break-after: avoid; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph;">
+                    <span style='font-family: Calibri; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                        <o:p>&nbsp;</o:p>
+                    </span>
+            </p>
+            <div align="center">
+                <table class="MsoNormalTable" style="border: currentColor; border-image: none; border-collapse: collapse; mso-table-layout-alt: fixed; mso-padding-alt: 0.0000pt 0.0000pt 0.0000pt 0.0000pt;" border="0" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td width="229" valign="center" style="padding: 0pt 5.4pt; border: 1pt solid rgb(0, 0, 0); width: 171.75pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);" colspan="2">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>采购人推荐意见</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="304" valign="center" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 228.6pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);" colspan="2">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>评审专家推荐意见</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height: 16.5pt;">
+                        <td width="81" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 61.05pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>供应商名称</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="147" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 110.7pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="justify" class="MsoNormal" style="text-align: justify; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1、浙江同鑫建设有限公司</span>
+                                <span style='font-family: 宋体; font-size: 10.5pt; mso-ascii-font-family: "Times New Roman"; mso-hansi-font-family: "Times New Roman";'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="83" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 62.4pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>供应商名称</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="221" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 166.2pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="justify" class="MsoNormal" style="text-align: justify; line-height: 18pt; text-indent: -18pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 18pt; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                        <span style='font-family: "Times New Roman"; font-size: 12pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                                            1<font face="宋体">、</font>
+                                        </span>
+                                <span style='font-family: "Times New Roman"; font-size: 7pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>&nbsp;</span>
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>湖南优发建设有限公司</span>
+                                <span style='font-family: 宋体; font-size: 10.5pt; mso-ascii-font-family: "Times New Roman"; mso-hansi-font-family: "Times New Roman";'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: -18pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 18pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>2、</span>
+                                <span style='font-family: "Times New Roman"; font-size: 7pt; mso-fareast-font-family: 宋体;'>&nbsp;</span>
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>湖南东晖耀建设有限公司</span>
+                                <span style='font-family: 宋体; font-size: 10.5pt; mso-ascii-font-family: "Times New Roman"; mso-hansi-font-family: "Times New Roman";'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height: 15pt;">
+                        <td width="81" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 61.05pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>推荐意见</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="147" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 110.7pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>满足竞谈文件要求</span>
+                                <span style='font-family: 宋体; font-size: 10.5pt; mso-ascii-font-family: "Times New Roman"; mso-hansi-font-family: "Times New Roman";'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="83" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 62.4pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>推荐意见</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="221" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 166.2pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>满足竞谈文件要求</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21.1pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.5pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                    <b>
+                            <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                <font face="宋体">四、谈判情况</font>
+                            </span>
+                    </b>
+                    <b>
+                            <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                <o:p></o:p>
+                            </span>
+                    </b>
+                </p>
+                <p align="justify" class="MsoNormal" style="text-align: justify; text-indent: -20pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 130pt; page-break-after: avoid; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph;">
+                        <span style='font-family: Calibri; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                            <o:p>&nbsp;</o:p>
+                        </span>
+                </p>
+                <table class="MsoNormalTable" style="border: currentColor; border-image: none; margin-left: 5.4pt; border-collapse: collapse; mso-table-layout-alt: fixed; mso-padding-alt: 0.0000pt 0.0000pt 0.0000pt 0.0000pt;" border="0" cellspacing="0">
+                    <tbody>
+                    <tr style="height: 17.65pt;">
+                        <td width="58" valign="top" style="padding: 0pt 5.4pt; border: 1pt solid rgb(0, 0, 0); width: 43.65pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>序号</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="219" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 164.75pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 10.5pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 10.5pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>供应商名称</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="132" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 99.15pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>最终报价</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="126" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 94.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>评审结果</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height: 18.4pt;">
+                        <td width="58" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 43.65pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style="font-family: 宋体; font-size: 12pt;">1</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="219" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 164.75pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>湖南东晖耀建设有限公司</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="132" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 99.15pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1233000.00元</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="126" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 94.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>第一名</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height: 18.4pt;">
+                        <td width="58" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 43.65pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style="font-family: 宋体; font-size: 12pt;">2</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="219" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 164.75pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>湖南优发建设有限公司</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="132" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 99.15pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1235500.00元</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="126" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 94.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>第二名</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr style="height: 18.4pt;">
+                        <td width="58" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 43.65pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style="font-family: 宋体; font-size: 12pt;">3</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="219" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 164.75pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>浙江同鑫建设有限公司</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="132" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 99.15pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>1236000.00元</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                        <td width="126" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 94.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                            <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>第三名</span>
+                                <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                            <o:p></o:p>
+                                        </span>
+                            </p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.4pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                    <b>
+                            <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                <font face="宋体">五、成交供应商名称、地址和成交金额</font>
+                            </span>
+                    </b>
+                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                            <o:p></o:p>
+                        </span>
+                </p>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.4pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                            <font face="宋体">成交供应商名称：湖南东晖耀建设有限公司</font>
+                        </span>
+                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                            <o:p></o:p>
+                        </span>
+                </p>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.4pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                            <font face="宋体">地</font>
+                            &nbsp;&nbsp;&nbsp;<font face="宋体">址：长沙市经济技术开发区星沙</font>
+                            1区9栋507号
+                        </span>
+                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                            <o:p></o:p>
+                        </span>
+                </p>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.4pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                            <font face="宋体">成交金额：</font>
+                            1233000.00元。
+                        </span>
+                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                            <o:p></o:p>
+                        </span>
+                </p>
+                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 21.1pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.5pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                    <b>
+                            <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                <font face="宋体">六、谈判小组成员名单</font>
+                            </span>
+                    </b>
+                    <span style='font-family: Calibri; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                            <o:p></o:p>
+                        </span>
+                </p>
+                <div align="center">
+                    <table class="MsoNormalTable" style="border: currentColor; border-image: none; border-collapse: collapse; mso-table-layout-alt: fixed; mso-padding-alt: 0.0000pt 0.0000pt 0.0000pt 0.0000pt;" border="0" cellspacing="0">
+                        <tbody>
+                        <tr>
+                            <td width="122" valign="top" style="padding: 0pt 5.4pt; border: 1pt solid rgb(0, 0, 0); width: 91.6pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>评审小组职务</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="106" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 80pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>姓名</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="78" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 59.05pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>产生方式</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="92" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 69.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>参与过程</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="60" valign="top" style="border-width: 1pt 1pt 1pt medium; border-style: solid solid solid none; border-color: rgb(0, 0, 0) rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 45.25pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-top-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>备注</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="122" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 91.6pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>组长</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="106" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 80pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>李百龙</span>
+                                    <span style="font-family: 宋体; font-size: 12pt;">
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="78" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 59.05pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>随机抽取</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="92" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 69.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>全过程</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="60" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 45.25pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>&nbsp;</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="122" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 91.6pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>成员</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="106" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 80pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>杨小农</span>
+                                    <span style="font-family: 宋体; font-size: 12pt;">
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="78" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 59.05pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>随机抽取</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="92" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 69.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>全过程</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="60" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 45.25pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>&nbsp;</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="122" valign="top" style="border-width: medium 1pt 1pt; border-style: none solid solid; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0); padding: 0pt 5.4pt; width: 91.6pt; mso-border-left-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>成员</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="106" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 80pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>郭其松</span>
+                                    <span style="font-family: 宋体; font-size: 12pt;">
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="78" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 59.05pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>自行选定</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="92" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 69.5pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p align="center" class="MsoNormal" style="text-align: center; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>全过程</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                            <td width="60" valign="top" style="border-width: medium 1pt 1pt medium; border-style: none solid solid none; border-color: currentColor rgb(0, 0, 0) rgb(0, 0, 0) currentColor; padding: 0pt 5.4pt; width: 45.25pt; mso-border-right-alt: 1.0000pt solid rgb(0, 0, 0); mso-border-bottom-alt: 1.0000pt solid rgb(0, 0, 0);">
+                                <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 0pt; margin-top: 0pt; margin-bottom: 0pt; margin-left: 0pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>&nbsp;</span>
+                                    <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-fareast-font-family: 宋体;'>
+                                                <o:p></o:p>
+                                            </span>
+                                </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 15.75pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 27.15pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                            <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                                <font face="宋体">注：产生方式注明是随机抽取或自行选定；参与过程注明是确定供应商、谈判或全过程。</font>
+                            </span>
+                        <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                                <o:p></o:p>
+                            </span>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 15.8pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 27.2pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <b>
+                                <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                    <font face="宋体">七、采购人和采购代理机构名称、联系人和联系方式</font>
+                                </span>
+                        </b>
+                        <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                                <o:p></o:p>
+                            </span>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">采</font>
+                                    <font face="宋体">购</font>
+                                    <font face="宋体">人：芷江侗族自治县库区移民事务中心</font>
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">联</font>
+                                    <font face="宋体">系</font>
+                                    <font face="宋体">人：</font>
+                                    &nbsp;周先生
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">电</font>
+                                    &nbsp;&nbsp;&nbsp;话： &nbsp;0745-2234145 &nbsp;
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">地</font>
+                                    &nbsp;&nbsp;&nbsp;址：芷江侗族自治县
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">代理机构名称：</font>
+                                    <font face="宋体">湖南明诚项目管理有限公司</font>
+                                    &nbsp;
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">地址：</font>
+                                    &nbsp;怀化市鹤城区迎丰东路顺天国际F1311室 &nbsp;&nbsp;&nbsp;
+                                </span>
+                        </u>
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <o:p></o:p>
+                                </span>
+                        </u>
+                    </p>
+                    <p class="MsoNormal" style="text-align: left; line-height: 18pt; text-indent: 38.55pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 49.95pt; -ms-text-autospace: ideograph-numeric; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <u>
+                                <span style='font-family: 宋体; font-size: 12pt; text-decoration: underline; mso-spacerun: "yes"; text-underline: single;'>
+                                    <font face="宋体">联系人：</font>
+                                    <font face="宋体">刘先生</font>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;联系电话： 0745-8681292
+                                </span>
+                        </u>
+                        <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>&nbsp;</span>
+                        <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                                <o:p></o:p>
+                            </span>
+                    </p>
+                    <p align="justify" class="MsoNormal" style="text-align: justify; line-height: 18pt; text-indent: 21pt; margin-top: 11.4pt; margin-bottom: 0pt; margin-left: 32.4pt; -ms-text-autospace: ideograph-numeric; -ms-text-justify: inter-ideograph; mso-pagination: widow-orphan; mso-line-height-rule: exactly;">
+                        <b>
+                                <span style='font-family: 宋体; font-size: 12pt; font-weight: bold; mso-spacerun: "yes";'>
+                                    <font face="宋体">八、</font>
+                                </span>
+                        </b>
+                        <span style='font-family: 宋体; font-size: 12pt; mso-spacerun: "yes";'>
+                                <font face="宋体">本公告自发布之起</font>
+                                7个工作日内，参与采购活动的供应商认为采购过程和成交结果使自己权益受到损害的，可以以书面形式向采购人或采购代理机构提出质疑。
+                            </span>
+                        <span style='font-family: "Times New Roman"; font-size: 10.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+                                <o:p></o:p>
+                            </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <span style='font-family: "Times New Roman"; font-size: 11.5pt; mso-spacerun: "yes"; mso-fareast-font-family: 宋体;'>
+          <p1 align='left'>    </p1>
+        <p1 align='left'>此中标(成交)公告的公告期限为1个工作日</p1>
+    </div>
+
+
+    <div class="relevant_notice">
+        <h1>附件下载：</h1>
+
+        <ul>
+
+            <li><p><a href="/mvc/downloadFile2.do?fileid=R2VwdXgxUmQ4dFA4amttblpRNWZpQT09" >CG013-芷江侗族自治县梨溪口乡梨溪口村公路建设工程-推荐.zip</a> </p></li>
+
+        </ul>
+    </div>
+    <div class="relevant_notice">
+        <h1>相关公告:</h1>
+
+        <ul>
+
+        </ul>
+
+    </div>
+</div>
+
+<div class="foot">
+    <a href="http://czt.hunan.gov.cn/ " target="_blank">湖南省财政厅</a>&nbsp;
+    <a> |</a>&nbsp; <a href="http://www.ccgp.gov.cn" target="_blank">中国政府采购网</a>&nbsp;
+    <a> |</a>&nbsp; <a href="http://www.cgpnews.cn/" target="_blank">中国政府采购新闻网</a>&nbsp;
+    <a> |</a>&nbsp; <a href="http://www.caigou2003.com/index.html" target="_blank">政府采购信息网</a>&nbsp;
+    <a> |</a>&nbsp; <a href="https://zfcg.rednet.cn/" target="_blank">红网政府采购频道</a>&nbsp;
+    <br />Copyright© 1999-2015 Hunan Province Provincial Finance Department, All rights reserved.  版权所有：湖南省财政厅
+    <br />E-mail: hunangpa@163.com 传真: 0731-85165446  网络实名: 湖南省政府采购网
+    <br /> 湘ICP备12013273号-2
+    <br /> 推荐使用的浏览器版本为IE11、Chrome
+    <br />
+</div>
+</body>
+</html>
